@@ -1,0 +1,74 @@
+body {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 auto;
+    background-color: gainsboro;
+}
+
+.secondTitle {
+    margin-bottom: 0;
+}
+
+#cover {
+    width: 210mm;
+    height: 170mm;
+    background-color: gainsboro;
+}
+
+p {
+    margin-top: 0;
+}
+
+textarea {
+    width: 400px;
+    height: 70px;
+}
+
+#container {
+    width: 210mm;
+    height: 170mm;
+    position: absolute;
+    background-color: white;
+    z-index: -1;
+}
+
+#logo {
+    position: relative;
+    margin-top: 3%;
+    margin-left: 3%;
+}
+
+#title {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+table {
+    margin: 0 auto;
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #000000;
+    text-align: center;
+    background-color: white;
+}
+
+td {
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #000000;
+    text-align: center;
+    background-color: white;
+}
+
+.rowHeader {
+    background-color: rgb(235, 235, 235);
+}
+
+.noteArea {
+    text-align: left;
+    vertical-align: top;
+    padding: 1%;
+}

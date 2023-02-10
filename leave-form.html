@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>請假申請</title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <script src="jspdf.min.js"></script>
+  <script src="html2canvas.min.js"></script>
+  <script src="leave-form.js"></script>
+
+<body>
+  <div>
+    <form>
+      <div>
+        <h1 class="secondTitle">再現影像請假表單</h1>
+        <p>※務必申請請假程序後再填寫以下表單，以利人事部統計。</p>
+        <h3 class="secondTitle">◎請注意以下事項：</h3>
+        <p>1. 此表單填寫後，仍需依部門主管或專案PM審核為基準。
+          <br>
+          2. 事假提前完成此表單，病假三天內補交。
+          <br>
+          3. 若請假當天時數有異動(如：申請請假2hr，實際請假3hr)，請於三天內重新提交此表單。
+          <br>
+          4. 若未事先告知部門主管與專案PM，也未填寫此表單，將視為曠職。
+        </p>
+      </div>
+      <div>
+        <h3 class="secondTitle">假別注意</h3>
+        <p>1. 病假給予30天計算，若超過30天將以事假計。
+          <br>
+          2. 生理假一年給予3天給薪假，超過將以病假計。
+          <br>
+          3. 其餘規定請參照公司員工守則。
+          <br>
+          備註：公司決策疫苗假為 「給薪假一天」，其餘天數照政府宣布辦理，目前有補休時數者可扣抵。
+        </p>
+      </div>
+      <div>
+        <h4 class="secondTitle">申請人</h4>
+        <input type="text" id="applicantNameInput">
+      </div>
+      <div>
+        <h4 class="secondTitle">請假類別</h4>
+        <p> 生理假、婚假、喪假等請選「其他」並填寫。 </p>
+        <input type="radio" name="leaveTypeInput" value="特休">特休
+        <input type="radio" name="leaveTypeInput" value="事假">事假
+        <input type="radio" name="leaveTypeInput" value="病假">病假
+        <input type="radio" name="leaveTypeInput" value="補休">補休
+        <input type="radio" name="leaveTypeInput" value="其他">其他
+        <input type="text" id="otherInput" disabled>
+      </div>
+      <div>
+        <h4 class="secondTitle">事由</h4>
+        <textarea id="reasonInput"></textarea>
+      </div>
+      <div>
+        <h4 class="secondTitle">請假日期(非填表申請日期)</h4>
+        <input type="date" id="leaveDateInput"><br><br>
+      </div>
+      <div>
+        <h4 class="secondTitle">時段(自動轉換為24小時制)</h4>
+        <p> 午休1小時不計，範例：9:30-18:30 </p>
+        <input type="time" id="rangeStartInput" onchange="calculateLeaveHours()">
+        <input type="time" id="rangeEndInput" onchange="calculateLeaveHours()">
+      </div>
+      <div>
+        <h4 class="secondTitle">請假時數(小時)</h4>
+        <p id="leaveHours" style="width: 90px;">0</p>
+        <p> 自訂時數(將覆蓋自動計算值) </p>
+        <input type="number" id="leaveHoursInput" placeholder="輸入數字" style="width: 90px;">
+      </div>
+      <div>
+        <h4 class="secondTitle">職務代理人</h4>
+        <p> 填寫職務代理同事的代號 </p>
+        <input type="text" id="proxyInput">
+      </div>
+      <div>
+        <h4 class="secondTitle">備註</h4>
+        <textarea id="noteInput"></textarea>
+      </div>
+      <div>
+        <h4 class="secondTitle">附件</h4>
+        <p> 疫苗假請於打完後三天內將小黃卡圖檔給人事部
+          <br>
+          病假請提供就醫證明，將文件與請假申請表一起放到信件附件中寄出。
+        </p>
+      </div>
+      <div>
+        <h4 class="secondTitle">注意</h4>
+        <p> 填完表單後請下載申請表，將申請表PDF文件寄送至 team-admin@renpic.com
+          <br>
+          待PM回覆OK後請假成功。
+        </p>
+      </div>
+
+      <button type="button" id="download">下載</button>
+    </form>
+  </div>
+
+  <div id="container">
+    <img id="logo" src="http://127.0.0.1:5500/RPlogo_CEB.png" width="100" />
+    <h1 id="title">再現影像製作股份有限公司</h1>
+    <div style="text-align: center; margin-top: 2%;">
+      <table cellspacing="0" border="0">
+        <colgroup width="60"></colgroup>
+        <colgroup width="130"></colgroup>
+        <colgroup width="60"></colgroup>
+        <colgroup width="130"></colgroup>
+        <colgroup width="60"></colgroup>
+        <colgroup width="130"></colgroup>
+        <tr>
+          <td colspan="6" height="40">
+            <font size="4">請假表單</font>
+          </td>
+        </tr>
+        <tr>
+          <td height="50" class="rowHeader">
+            申請人
+          </td>
+          <td id="applicantName1"><br /></td>
+          <td class="rowHeader">請假<br />類別</td>
+          <td id="leaveType"><br /></td>
+          <td class="rowHeader">填表日</td>
+          <td id="todayDate"><br /></td>
+        </tr>
+        <tr>
+          <td height="50" class="rowHeader">
+            請假<br />日期
+          </td>
+          <td id="leaveDate"><br /></td>
+          <td class="rowHeader">請假<br />時段</td>
+          <td id="range"><br /></td>
+          <td class="rowHeader">
+            職務<br />代理人
+          </td>
+          <td id="proxy"><br /></td>
+        </tr>
+        <tr>
+          <td height="80" class="rowHeader">
+            事由
+          </td>
+          <td colspan="5" class="noteArea" id="reason"><br /></td>
+        </tr>
+        <tr>
+          <td height="80" class="rowHeader">
+            備註
+          </td>
+          <td colspan="5" class="noteArea" id="note"><br /></td>
+        </tr>
+        <tr>
+          <td colspan="2" height="32">總經理</td>
+          <td colspan="2">專案主管</td>
+          <td colspan="2">申請人</td>
+        </tr>
+        <tr>
+          <td colspan="2" height="50"><br /></td>
+          <td colspan="2"><br /></td>
+          <td id="applicantName2" colspan="2"><br /></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div id="cover"></div>
+  <!-- <div id="cover" hidden></div> -->
+
+  <script>
+    document.querySelectorAll('input[name="leaveTypeInput"]').forEach(el => {
+      el.addEventListener("change", function () {
+        document.getElementById("otherInput").disabled = (this.value !== "其他")
+      })
+    })
+
+    document.getElementById("download").addEventListener("click", getFormValues);
+  </script>
+
+</body>
+
+</html>
