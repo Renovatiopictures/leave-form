@@ -4,10 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <title>請假申請</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="style.css" />
   <script src="jspdf.min.js"></script>
   <script src="html2canvas.min.js"></script>
   <script src="leave-form.js"></script>
+</head>
 
 <body>
   <div>
@@ -16,85 +20,81 @@
         <h1 class="secondTitle">再現影像請假表單</h1>
         <p>※務必申請請假程序後再填寫以下表單，以利人事部統計。</p>
         <h3 class="secondTitle">◎請注意以下事項：</h3>
-        <p>1. 此表單填寫後，仍需依部門主管或專案PM審核為基準。
-          <br>
-          2. 事假提前完成此表單，病假三天內補交。
-          <br>
-          3. 若請假當天時數有異動(如：申請請假2hr，實際請假3hr)，請於三天內重新提交此表單。
-          <br>
-          4. 若未事先告知部門主管與專案PM，也未填寫此表單，將視為曠職。
-        </p>
+        <ol>
+          <li>此表單填寫後，仍需依部門主管或專案 PM 審核為基準。</li>
+          <li>事假提前完成此表單，病假 3 天內補交。</li>
+          <li>若請假當天時數有異動 (如：申請請假 2hr，實際請假 3hr)，請於三天內重新提交此表單。</li>
+          <li>若未事先告知部門主管與專案 PM，也未填寫此表單，將視為曠職。</li>
+        </ol>
       </div>
       <div>
         <h3 class="secondTitle">假別注意</h3>
-        <p>1. 病假給予30天計算，若超過30天將以事假計。
-          <br>
-          2. 生理假一年給予3天給薪假，超過將以病假計。
-          <br>
-          3. 其餘規定請參照公司員工守則。
-          <br>
-          備註：公司決策疫苗假為 「給薪假一天」，其餘天數照政府宣布辦理，目前有補休時數者可扣抵。
-        </p>
+        <ol>
+          <li>病假給予 30 天計算，若超過 30 天將以事假計。</li>
+          <li>生理假一年給予 3 天給薪假，超過將以病假計。</li>
+          <li>其餘規定請參照公司員工守則。</li>
+        </ol>
+        <p> 備註：公司決策疫苗假為 「給薪假一天」，其餘天數照政府宣布辦理，目前有補休時數者可扣抵。 </p>
       </div>
       <div>
         <h4 class="secondTitle">申請人</h4>
-        <input type="text" id="applicantNameInput">
+        <input type="text" id="applicantNameInput" placeholder="姓名" style="font-size: large;">
       </div>
       <div>
         <h4 class="secondTitle">請假類別</h4>
-        <p> 生理假、婚假、喪假等請選「其他」並填寫。 </p>
+        <!-- <p> 生理假、婚假、喪假等請選「其他」並填寫。 </p> -->
         <input type="radio" name="leaveTypeInput" value="特休">特休
         <input type="radio" name="leaveTypeInput" value="事假">事假
         <input type="radio" name="leaveTypeInput" value="病假">病假
         <input type="radio" name="leaveTypeInput" value="補休">補休
         <input type="radio" name="leaveTypeInput" value="其他">其他
-        <input type="text" id="otherInput" disabled>
+        <input type="text" id="otherInput" disabled placeholder="生理假、婚喪假等在此填寫" style="font-size: large;">
       </div>
       <div>
         <h4 class="secondTitle">事由</h4>
-        <textarea id="reasonInput"></textarea>
+        <textarea id="reasonInput" style="font-size: large;"></textarea>
       </div>
       <div>
-        <h4 class="secondTitle">請假日期(非填表申請日期)</h4>
-        <input type="date" id="leaveDateInput"><br><br>
+        <h4 class="secondTitle">請假日期 (非填表申請日期)</h4>
+        <input type="date" id="leaveDateInput" style="font-size: large;"><br><br>
       </div>
       <div>
-        <h4 class="secondTitle">時段(自動轉換為24小時制)</h4>
-        <p> 午休1小時不計，範例：9:30-18:30 </p>
-        <input type="time" id="rangeStartInput" onchange="calculateLeaveHours()">
-        <input type="time" id="rangeEndInput" onchange="calculateLeaveHours()">
+        <h4 class="secondTitle">時段 (申請表上將自動轉換為 24 小時制)</h4>
+        <p> 時數將自動扣除午休 1 小時，如有需要列入計算請用自訂時數修改 </p>
+        <input type="time" id="rangeStartInput" style="font-size: large;" onchange="calculateLeaveHours()"> ～</input>
+        <input type="time" id="rangeEndInput" style="font-size: large;" onchange="calculateLeaveHours()">
       </div>
       <div>
-        <h4 class="secondTitle">請假時數(小時)</h4>
-        <p id="leaveHours" style="width: 90px;">0</p>
-        <p> 自訂時數(將覆蓋自動計算值) </p>
-        <input type="number" id="leaveHoursInput" placeholder="輸入數字" style="width: 90px;">
+        <h4 class="secondTitle">請假時數 (小時)</h4>
+        <p id="leaveHours" style="width: 90px; color: steelblue;">0</p>
+        <p> 自訂時數 (將覆蓋自動計算值)</p>
+        <input type="number" id="leaveHoursInput" placeholder="輸入數字" style="font-size: large; width: 90px;">
       </div>
       <div>
-        <h4 class="secondTitle">職務代理人</h4>
-        <p> 填寫職務代理同事的代號 </p>
-        <input type="text" id="proxyInput">
+        <h4 class="secondTitle">職務代理人 </h4>
+        <p> 填寫職務代理同事的代號或姓名 </p>
+        <input type="text" id="proxyInput" style="font-size: large;">
       </div>
       <div>
         <h4 class="secondTitle">備註</h4>
-        <textarea id="noteInput"></textarea>
+        <textarea id="noteInput" style="font-size: large;"></textarea>
       </div>
       <div>
         <h4 class="secondTitle">附件</h4>
-        <p> 疫苗假請於打完後三天內將小黃卡圖檔給人事部
+        <p> 疫苗假請於打完後 3 天內將小黃卡圖檔給人事部
           <br>
           病假請提供就醫證明，將文件與請假申請表一起放到信件附件中寄出。
         </p>
       </div>
       <div>
         <h4 class="secondTitle">注意</h4>
-        <p> 填完表單後請下載申請表，將申請表PDF文件寄送至 team-admin@renpic.com
+        <p> 填完表單後請下載申請表，將申請表 PDF 文件寄送至 team-admin@renpic.com
           <br>
-          待PM回覆OK後請假成功。
+          待 PM 回覆 OK 後請假成功。
         </p>
       </div>
 
-      <button type="button" id="download">下載</button>
+      <button type="button" id="download" style="font-size: x-large;">下載</button>
     </form>
   </div>
 

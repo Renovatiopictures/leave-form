@@ -3,6 +3,7 @@ body {
     height: 297mm;
     margin: 0 auto;
     background-color: gainsboro;
+    font-family: 'Noto Sans TC', sans-serif;
 }
 
 .secondTitle {
